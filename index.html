@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Present Perfect vs Past Simple — тренажёр</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1F36; --muted:#5A6180; --line:#D9DDEA; --bg:#F1F3F9; --card:#FFFFFF;
+    --ps:#2F4BE0; --ps-soft:#E4E9FD; --pp:#E3336C; --pp-soft:#FDE4EC;
+    --ok:#1E9E62; --ok-soft:#E2F6EC; --bad:#C8312B; --bad-soft:#FCE7E6; --sun:#FFD23F;
+    --display:"Unbounded", "Golos Text", system-ui, sans-serif;
+    --body:"Golos Text", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.45; min-height:100vh;
+        padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0); }
+  button, input{ font:inherit; color:inherit; }
+  button{ cursor:pointer; }
+  :focus-visible{ outline:3px solid var(--sun); outline-offset:2px; }
+  .ps{ color:var(--ps); } .pp{ color:var(--pp); }
+
+  .wrap{ max-width:560px; margin:0 auto; padding:16px 16px 32px; }
+  .top{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+  .brand{ font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:-0.01em; white-space:nowrap; }
+  .count{ font-size:12.5px; color:var(--muted); white-space:nowrap; }
+  .bar{ height:8px; background:#DDE1EE; border-radius:99px; overflow:hidden; margin-bottom:16px; }
+  .bar i{ display:block; height:100%; width:0; background:linear-gradient(90deg,var(--ps),var(--pp)); border-radius:99px; transition:width .35s ease; }
+
+  .card{ background:var(--card); border:1.5px solid var(--ink); border-radius:18px; padding:18px; }
+  h1{ font-family:var(--display); font-weight:800; font-size:28px; line-height:1.1; letter-spacing:-0.02em; }
+  h1 .vs{ font-weight:500; color:var(--muted); font-size:.6em; vertical-align:.15em; }
+  h2{ font-family:var(--display); font-weight:700; font-size:21px; line-height:1.2; letter-spacing:-0.01em; }
+  .lead{ margin-top:10px; color:var(--muted); }
+  .rules{ display:grid; gap:10px; margin-top:16px; }
+  .rules div{ border-radius:12px; padding:12px 14px; font-size:15.5px; line-height:1.4; }
+  .rules .r-ps{ background:var(--ps-soft); } .rules .r-pp{ background:var(--pp-soft); }
+  .rules b{ font-family:var(--display); font-size:14px; display:block; margin-bottom:2px; }
+  .rules strong{ font-weight:700; }
+  .plan{ margin-top:16px; list-style:none; display:grid; gap:6px; font-size:15.5px; }
+  .plan li{ display:flex; gap:10px; align-items:baseline; }
+  .plan li span:first-child{ font-family:var(--display); font-weight:700; min-width:1.2em; }
+
+  .btn{ display:block; width:100%; margin-top:18px; border:0; border-radius:14px; background:var(--ink); color:#fff; font-weight:700; font-size:17px; padding:15px 18px; }
+  .btn:active{ transform:translateY(1px); }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--ink); margin-top:10px; }
+
+  .task{ font-size:15px; color:var(--muted); margin:14px 2px 10px; }
+  .round-tag{ font-family:var(--display); font-weight:700; font-size:13px; color:var(--muted); }
+
+  /* ---------- meme formats ---------- */
+  .gap{ display:inline-block; min-width:4.5em; border-bottom:2.5px solid var(--ink); text-align:center; font-weight:700; }
+  .gap.filled{ border-bottom-color:transparent; min-width:0; padding:0 4px; border-radius:6px; }
+  .gap.filled.ps{ background:var(--ps-soft); } .gap.filled.pp{ background:var(--pp-soft); }
+  .gap.filled.plain{ background:#ECEEF5; }
+
+  .m-chat{ background:#F6F7FB; border-radius:16px; padding:12px; }
+  .m-top{ display:flex; align-items:center; gap:10px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+  .ava{ width:38px; height:38px; border-radius:50%; background:var(--sun); display:grid; place-items:center; font-size:21px; flex:none; }
+  .m-top b{ display:block; font-size:16px; line-height:1.2; } .m-top small{ color:var(--muted); font-size:12.5px; }
+  .bubbles{ display:flex; flex-direction:column; gap:8px; padding-top:12px; }
+  .bub{ max-width:86%; padding:9px 13px; border-radius:16px; line-height:1.35; }
+  .bub.in{ align-self:flex-start; background:#fff; border:1px solid var(--line); border-bottom-left-radius:4px; }
+  .bub.out{ align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px; }
+  .bub.out .gap{ border-bottom-color:#fff; }
+  .bub.out .gap.filled, .m-toast .gap.filled{ color:#fff; }
+  .bub.out .gap.filled.ps{ background:#3A4FB8; } .bub.out .gap.filled.pp{ background:#A6335A; } .bub.out .gap.filled.plain{ background:#3B4163; }
+  .bub.new{ animation:pop .3s ease; }
+  @keyframes pop{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+
+  .m-nobody p{ line-height:1.5; }
+  .m-nobody .q{ color:var(--muted); }
+  .m-nobody .line{ margin-top:8px; font-size:19px; font-weight:500; }
+
+  .m-notif{ background:var(--bg); border-radius:16px; padding:12px 14px; }
+  .m-notif .app{ display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:6px; }
+  .m-notif .app b{ color:var(--ink); }
+  .m-notif p{ font-size:18px; }
+
+  .m-post{ border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  .m-post .pic{ height:92px; background:linear-gradient(135deg,#BFD3FF,#FFD6E4); display:flex; align-items:flex-end; justify-content:space-between; padding:10px 12px; font-size:30px; }
+  .m-post .pic em{ font-style:normal; font-size:12.5px; font-weight:700; background:#fff; border-radius:6px; padding:2px 7px; }
+  .m-post p{ padding:10px 12px 12px; font-size:18px; }
+
+  .m-toast{ background:var(--ink); color:#fff; border-radius:16px; padding:14px 16px; border-left:8px solid var(--sun); }
+  .m-toast small{ display:block; color:#C9CDE0; font-size:13px; margin-bottom:4px; }
+  .m-toast p{ font-size:18px; font-weight:500; }
+  .m-toast .gap{ border-bottom-color:#fff; }
+  .m-toast .gap.filled.pp{ background:#A6335A; } .m-toast .gap.filled.ps{ background:#3A4FB8; } .m-toast .gap.filled.plain{ background:#3B4163; }
+
+  .m-marker{ display:grid; place-items:center; padding:26px 10px; background:var(--bg); border-radius:16px; }
+  .chip{ font-family:var(--display); font-weight:700; font-size:26px; letter-spacing:-0.01em; background:#fff; border:1.5px solid var(--ink); border-radius:14px; padding:10px 18px; text-align:center; }
+
+  .m-type .sent{ font-size:19px; line-height:2; }
+  .m-type input{ width:9.5em; max-width:100%; border:0; border-bottom:2.5px solid var(--ink); background:var(--bg); border-radius:8px 8px 0 0; padding:2px 8px; font-weight:700; font-size:18px; }
+  .m-type input.ok{ background:var(--ok-soft); border-bottom-color:var(--ok); }
+  .m-type input.bad{ background:var(--bad-soft); border-bottom-color:var(--bad); }
+  .m-type .hint{ color:var(--muted); font-size:16px; white-space:nowrap; }
+
+  .m-police{ background:#FFF8DB; border-radius:16px; padding:14px 16px; }
+  .m-police .ph{ font-family:var(--display); font-weight:700; font-size:15px; }
+  .m-police small{ display:block; color:var(--muted); font-size:13.5px; margin-top:8px; }
+  .m-police .sus{ font-size:20px; font-weight:500; margin-top:4px; }
+
+  /* ---------- answers ---------- */
+  .opts{ display:grid; gap:10px; margin-top:14px; }
+  .opts.two{ grid-template-columns:1fr 1fr; }
+  .opt{ border:1.5px solid var(--ink); background:#fff; border-radius:14px; padding:13px 14px; font-weight:600; font-size:17px; text-align:left; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .opts.two .opt{ justify-content:center; text-align:center; white-space:nowrap; }
+  .opt.t-ps{ border-color:var(--ps); color:var(--ps); } .opt.t-pp{ border-color:var(--pp); color:var(--pp); }
+  .opt:disabled{ cursor:default; }
+  .opt.right{ background:var(--ok-soft); border-color:var(--ok); color:var(--ink); }
+  .opt.wrong{ background:var(--bad-soft); border-color:var(--bad); color:var(--ink); }
+  .opt.dim{ opacity:.45; }
+  .opt .mark{ font-size:18px; }
+  .check{ margin-top:14px; }
+
+  .fb{ margin-top:14px; border-radius:16px; padding:14px 16px; border:1.5px solid; }
+  .fb.good{ background:var(--ok-soft); border-color:var(--ok); }
+  .fb.bad{ background:var(--bad-soft); border-color:var(--bad); }
+  .fb .react{ font-family:var(--display); font-weight:700; font-size:18px; }
+  .fb .why{ margin-top:6px; font-size:15.5px; }
+  .say{ display:flex; align-items:flex-start; gap:10px; margin-top:10px; background:#fff; border-radius:12px; padding:9px 10px 9px 12px; font-weight:600; }
+  .say span{ flex:1; }
+  .spk{ flex:none; border:1.5px solid var(--ink); background:#fff; border-radius:10px; width:40px; height:36px; font-size:17px; line-height:1; }
+
+  /* ---------- results ---------- */
+  .score{ font-family:var(--display); font-weight:800; font-size:44px; letter-spacing:-0.02em; margin-top:10px; }
+  .score small{ font-size:18px; color:var(--muted); font-weight:500; }
+  .rounds{ list-style:none; margin-top:12px; display:grid; gap:6px; font-size:15.5px; }
+  .rounds li{ display:flex; justify-content:space-between; border-bottom:1px solid var(--line); padding:5px 0; }
+  .review{ margin-top:18px; }
+  .review h3{ font-family:var(--display); font-weight:700; font-size:16px; margin-bottom:6px; }
+  .review .say{ background:var(--bg); }
+
+  @media (prefers-reduced-motion:reduce){ .bar i{ transition:none; } .bub.new{ animation:none; } }
+  @media (max-width:380px){ body{ font-size:16px; } h1{ font-size:24px; } .chip{ font-size:22px; } .opts.two{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="brand"><span class="pp">Present Perfect</span> vs <span class="ps">Past Simple</span></div><div class="count" id="count"></div></div>
+  <div class="bar"><i id="bar"></i></div>
+  <main id="app" aria-live="polite"></main>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const ROUNDS = [
+  { title:'Раунд 1. Мемы', task:'Выбери правильную форму.', type:'choice', rule:'Смотри на подсказки: есть законченное «когда» → Past Simple. Время не названо, ещё идёт или «до сих пор» → Present Perfect.',
+    items:[
+      { fmt:'chat', who:'Мама', ava:'👩', msgs:[['in','Where’s my phone charger? 🔌'],['out','No idea. I {gap} it since Monday 🤷']],
+        opts:[['haven’t seen','pp',1],['didn’t see','ps',0]], full:'No idea. I haven’t seen it since Monday.',
+        why:'<b>since Monday</b> — «с понедельника и до сих пор» → Present Perfect.' },
+      { fmt:'chat', who:'Бро', ava:'😎', msgs:[['in','{gap} the new episode yet?? 😱']], after:[['out','No spoilers!!! 🙉']],
+        opts:[['Have you watched','pp',1],['Did you watch','ps',0]], full:'Have you watched the new episode yet?',
+        why:'<b>yet</b> → Present Perfect. (В американском английском встречается и Did you watch… yet?, но стандартный британский вариант — Present Perfect.)' },
+      { fmt:'nobody', who:'Я на уроке английского', text:'I {gap} my homework yesterday, I promise! 🥲',
+        opts:[['did','ps',1],['have done','pp',0]], full:'I did my homework yesterday, I promise!',
+        why:'<b>yesterday</b> — время закончилось → Past Simple.' },
+      { fmt:'notif', app:'📱 Экранное время', time:'сейчас', text:'So far this week you {gap} 30 hours on your phone.',
+        opts:[['have spent','pp',1],['spent','ps',0]], full:'So far this week you have spent 30 hours on your phone.',
+        why:'<b>so far this week</b> — неделя ещё идёт → Present Perfect.' },
+      { fmt:'post', pic:'☀️🌊', tag:'📍 Sochi', text:'We {gap} to the sea last summer. Best trip ever!',
+        opts:[['went','ps',1],['have been','pp',0]], full:'We went to the sea last summer.',
+        why:'<b>last summer</b> — законченное время → Past Simple.' },
+      { fmt:'toast', label:'🔥 Streak: 28 days', text:'You {gap} English every day since 1 September!',
+        opts:[['have studied','pp',1],['studied','ps',0]], full:'You have studied English every day since 1 September!', sp:'You have studied English every day since the first of September!',
+        why:'<b>since 1 September</b> — с 1 сентября и до сих пор → Present Perfect.' },
+      { fmt:'chat', who:'Лёха', ava:'🧢', msgs:[['in','I’ve broken my phone 😭'],['out','Oh no! How {gap} that happen?']],
+        opts:[['did','ps',1],['has','pp',0]], full:'Oh no! How did that happen?',
+        why:'Новость уже прозвучала (Present Perfect), а подробности — как это случилось — всегда в Past Simple.' },
+      { fmt:'nobody', who:'Мой дедушка', text:'When I was your age, I {gap} five kilometres to school. In the snow. ❄️',
+        opts:[['walked','ps',1],['have walked','pp',0]], full:'When I was your age, I walked five kilometres to school. In the snow.',
+        why:'<b>When I was your age</b> — законченный период жизни → Past Simple.' },
+      { fmt:'chat', who:'Даша', ava:'🦄', msgs:[['in','Is Masha your best friend?'],['out','Yes! I {gap} her since first grade 💕']],
+        opts:[['have known','pp',1],['know','plain',0]], full:'Yes! I have known her since first grade.',
+        why:'<b>since</b> + «до сих пор» → Present Perfect. «I know her since…» — калька с русского «я знаю её с…».' },
+      { fmt:'notif', app:'📦 Доставка', time:'вчера', text:'Your order {gap} yesterday at 14:25.',
+        opts:[['arrived','ps',1],['has arrived','pp',0]], full:'Your order arrived yesterday at 14:25.',
+        why:'<b>yesterday at 14:25</b> — точное время в прошлом → Past Simple.' },
+    ]},
+  { title:'Раунд 2. Маркеры', task:'К какому времени относится это слово?', type:'sort', rule:'Past Simple любит законченное время. Present Perfect — время, которое не названо или ещё не закончилось.',
+    items:[
+      { t:'yesterday', a:'ps', why:'Вчера закончилось → Past Simple.' },
+      { t:'ever', a:'pp', why:'«Хоть раз в жизни» — опыт → Present Perfect.' },
+      { t:'two days ago', a:'ps', why:'…ago — точка в прошлом → Past Simple.' },
+      { t:'since Monday', a:'pp', why:'С понедельника до сих пор → Present Perfect.' },
+      { t:'last week', a:'ps', why:'Прошлая неделя закончилась → Past Simple.' },
+      { t:'yet', a:'pp', why:'«Уже / ещё не» к этому моменту → Present Perfect.' },
+      { t:'in 2020', a:'ps', why:'Конкретный год в прошлом → Past Simple.' },
+      { t:'never', a:'pp', why:'«Ни разу в жизни» — опыт → Present Perfect.' },
+      { t:'When…?', a:'ps', why:'Вопрос «когда?» → Past Simple: When did you…?' },
+      { t:'so far', a:'pp', why:'«На данный момент» → Present Perfect.' },
+      { t:'when I was 7', a:'ps', why:'Законченный период жизни → Past Simple.' },
+      { t:'already', a:'pp', why:'«Уже» к этому моменту → Present Perfect.' },
+    ]},
+  { title:'Раунд 3. Раскрой скобки', task:'Впиши глагол в нужной форме. Сокращения тоже засчитываются: I’ve, she’s, didn’t.', type:'input', rule:'Past Simple — V2 (ate, slept). Present Perfect — have / has + V3 (have seen, has lived).',
+    items:[
+      { pre:'My cat', hint:'eat', post:'my homework yesterday 😼', acc:['ate'], full:'My cat ate my homework yesterday.', why:'<b>yesterday</b> → Past Simple. eat — <b>ate</b> — eaten.' },
+      { pre:'I', hint:'never / see', post:'such a weird meme before 🤨', acc:['have never seen'], full:'I have never seen such a weird meme before.', why:'<b>never … before</b> — опыт → Present Perfect: have never seen.' },
+      { pre:'The film', hint:'start', post:'ten minutes ago! Hurry up! 🏃', acc:['started'], full:'The film started ten minutes ago! Hurry up!', why:'<b>ten minutes ago</b> → Past Simple.' },
+      { pre:'We', hint:'be', post:'best friends since 2021 🤝', acc:['have been'], full:'We have been best friends since 2021.', why:'<b>since 2021</b> и до сих пор → Present Perfect. be — was/were — <b>been</b>.' },
+      { pre:'When', hint:'you / get', post:'this hoodie? 👀', acc:['did you get'], full:'When did you get this hoodie?', why:'Вопрос <b>When…?</b> → только Past Simple: When did you get…?' },
+      { pre:'So far I', hint:'write', post:'three pages of my essay ✍️', acc:['have written'], full:'So far I have written three pages of my essay.', why:'<b>so far</b> → Present Perfect. write — wrote — <b>written</b>.' },
+      { pre:'Last night I', hint:'sleep', post:'only four hours 😵', acc:['slept'], full:'Last night I slept only four hours.', why:'<b>last night</b> → Past Simple. sleep — <b>slept</b> — slept.' },
+      { pre:'She', hint:'live', post:'in Kazan since 2019 🏙️', acc:['has lived'], full:'She has lived in Kazan since 2019.', why:'<b>since 2019</b> и до сих пор → Present Perfect: she <b>has</b> lived.' },
+    ]},
+  { title:'Раунд 4. Грамматическая полиция', task:'Предложение правильное — или задерживаем?', type:'police', rule:'Ищи конфликт: законченное время + have/has, вопрос When + have, didn’t + V2.',
+    items:[
+      { s:'I have seen this video yesterday.', ok:0, fix:'I saw this video yesterday.', why:'<b>yesterday</b> и have seen не дружат → Past Simple.' },
+      { s:'I’ve known Dima since we were six.', ok:1, fix:'I’ve known Dima since we were six.', why:'<b>since</b> + до сих пор → Present Perfect. Всё чисто.' },
+      { s:'When have you bought these sneakers?', ok:0, fix:'When did you buy these sneakers?', why:'С <b>When</b> — только Past Simple.' },
+      { s:'We went to the zoo last weekend.', ok:1, fix:'We went to the zoo last weekend.', why:'<b>last weekend</b> → Past Simple. Всё чисто.' },
+      { s:'I know him since 2020.', ok:0, fix:'I’ve known him since 2020.', why:'Калька с русского. С <b>since</b> нужен Present Perfect.' },
+      { s:'Have you ever been to Kazan?', ok:1, fix:'Have you ever been to Kazan?', why:'<b>ever</b> — опыт → Present Perfect. Всё чисто.' },
+      { s:'She has went home.', ok:0, fix:'She has gone home.', why:'После has нужна V3: go — went — <b>gone</b>.' },
+      { s:'So far we’ve had two tests this term.', ok:1, fix:'So far we’ve had two tests this term.', why:'<b>so far</b> → Present Perfect. Всё чисто.' },
+      { s:'I didn’t saw the message.', ok:0, fix:'I didn’t see the message.', why:'После didn’t — первая форма: didn’t <b>see</b>.' },
+    ]},
+];
+const GOOD = ['🔥 База!','😎 Изи.','✅ Грамматика одобряет.','🧠 Мозг прокачан.','🏆 +1 к ачивкам.'];
+const BAD  = ['💀 Мимо.','🫠 Почти, но нет.','👀 Присмотрись.','🚪 Правильный ответ вышел из чата.'];
+const TOTAL = ROUNDS.reduce((n,r)=>n+r.items.length,0);
+
+/* ============ STATE ============ */
+let S;
+function reset(){ S = { r:-1, i:0, done:0, score:0, rs:ROUNDS.map(()=>0), miss:[], answered:false, next:null }; }
+reset();
+
+const app = document.getElementById('app');
+const bar = document.getElementById('bar');
+const count = document.getElementById('count');
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+/* ============ AUDIO (Web Speech API) ============ */
+let voice = null;
+function pickVoice(){
+  if(!('speechSynthesis' in window)) return;
+  const v = speechSynthesis.getVoices();
+  voice = v.find(x=>/en-GB/i.test(x.lang)) || v.find(x=>/^en/i.test(x.lang)) || null;
+}
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  const clean = text.replace(/\p{Extended_Pictographic}|\uFE0F|\u200D/gu,'').trim();
+  const u = new SpeechSynthesisUtterance(clean);
+  u.lang = voice ? voice.lang : 'en-GB'; if(voice) u.voice = voice; u.rate = 0.92;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+const canSpeak = 'speechSynthesis' in window;
+function sayHTML(text, spoken){
+  const sp = (spoken||text).replace(/"/g,'&quot;');
+  return `<div class="say"><span>${text}</span>${canSpeak?`<button class="spk" type="button" aria-label="Прослушать" data-say="${sp}">🔊</button>`:''}</div>`;
+}
+app.addEventListener('click', e=>{ const b=e.target.closest('[data-say]'); if(b) speak(b.dataset.say); });
+
+/* ============ HEADER ============ */
+function updateTop(){
+  bar.style.width = (S.done/TOTAL*100)+'%';
+  if(S.r<0) count.textContent = `${TOTAL} заданий`;
+  else if(S.r>=ROUNDS.length) count.textContent = 'Финиш';
+  else count.textContent = `Раунд ${S.r+1}/${ROUNDS.length}: ${Math.min(S.i+1,ROUNDS[S.r].items.length)}/${ROUNDS[S.r].items.length}`;
+}
+
+/* ============ SCREENS ============ */
+function renderStart(){
+  updateTop();
+  app.innerHTML = `
+  <section class="card">
+    <h1><span class="pp">Present Perfect</span> <span class="vs">vs</span> <span class="ps">Past Simple</span></h1>
+    <p class="lead">Тренажёр для уровня B1. Четыре раунда, около 10 минут. После каждого ответа можно прослушать правильное предложение 🔊</p>
+    <div class="rules">
+      <div class="r-ps"><b class="ps">Past Simple</b>Законченное время, важно <strong>когда</strong>: yesterday, last week, ago, in 2020, When…?</div>
+      <div class="r-pp"><b class="pp">Present Perfect</b>Важно, что сейчас: опыт, результат, период ещё идёт: ever, never, yet, since, so far.</div>
+    </div>
+    <ul class="plan">${ROUNDS.map((r,k)=>`<li><span>${k+1}</span><span>${r.title.replace(/^Раунд \d\. /,'')} — ${r.items.length}</span></li>`).join('')}</ul>
+    <button class="btn" id="go">Начать</button>
+  </section>`;
+  const b = document.getElementById('go'); b.onclick = ()=>{ S.r=0; S.i=0; renderIntro(); }; b.focus();
+}
+
+function renderIntro(){
+  updateTop();
+  const R = ROUNDS[S.r];
+  app.innerHTML = `
+  <section class="card">
+    <p class="round-tag">Раунд ${S.r+1} из ${ROUNDS.length}</p>
+    <h2 style="margin-top:6px">${R.title.replace(/^Раунд \d\. /,'')}</h2>
+    <p class="lead">${R.task}</p>
+    <div class="rules"><div class="r-pp" style="background:var(--bg)">${R.rule}</div></div>
+    <button class="btn" id="go">Поехали</button>
+  </section>`;
+  const b = document.getElementById('go'); b.onclick = renderItem; b.focus();
+}
+
+function fillGap(text, fill){
+  const g = fill ? `<span class="gap filled ${fill[1]}">${fill[0]}</span>` : `<span class="gap" aria-label="пропуск">&nbsp;</span>`;
+  return text.replace('{gap}', g);
+}
+function memeHTML(it, fill){
+  const t = s => fillGap(s, fill);
+  switch(it.fmt){
+    case 'chat': return `<div class="m-chat"><div class="m-top"><span class="ava">${it.ava}</span><div><b>${it.who}</b><small>в сети</small></div></div>
+      <div class="bubbles">${it.msgs.map(m=>`<div class="bub ${m[0]}">${t(m[1])}</div>`).join('')}${fill&&it.after?it.after.map(m=>`<div class="bub ${m[0]} new">${m[1]}</div>`).join(''):''}</div></div>`;
+    case 'nobody': return `<div class="m-nobody"><p class="q">Никто:</p><p class="q">Абсолютно никто:</p><p>${it.who}:</p><p class="line">${t(it.text)}</p></div>`;
+    case 'notif': return `<div class="m-notif"><div class="app"><b>${it.app}</b><span>${it.time}</span></div><p>${t(it.text)}</p></div>`;
+    case 'post': return `<div class="m-post"><div class="pic"><span>${it.pic}</span><em>${it.tag}</em></div><p>${t(it.text)}</p></div>`;
+    case 'toast': return `<div class="m-toast"><small>${it.label}</small><p>${t(it.text)}</p></div>`;
+  }
+}
+
+function frame(inner){
+  const R = ROUNDS[S.r];
+  app.innerHTML = `<p class="task">${R.task}</p><section class="card">${inner}</section><div id="fb"></div>`;
+}
+
+function renderItem(){
+  S.answered = false; updateTop();
+  const R = ROUNDS[S.r], it = R.items[S.i];
+  if(R.type==='choice'){
+    const opts = shuffle(it.opts);
+    frame(`<div id="meme">${memeHTML(it,null)}</div>
+      <div class="opts">${opts.map(o=>`<button class="opt" data-ok="${o[2]}" data-t="${o[0]}">${o[0]}<span class="mark"></span></button>`).join('')}</div>`);
+    app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(S.answered) return;
+      const ok = b.dataset.ok==='1';
+      const right = it.opts.find(o=>o[2]);
+      app.querySelectorAll('.opt').forEach(x=>{ x.disabled=true;
+        if(x.dataset.ok==='1'){ x.classList.add('right'); x.querySelector('.mark').textContent='✅'; }
+        else if(x===b){ x.classList.add('wrong'); x.querySelector('.mark').textContent='❌'; }
+        else x.classList.add('dim'); });
+      document.getElementById('meme').innerHTML = memeHTML(it, [right[0], right[1]]);
+      answer(ok, it.why, it.full, null, it.sp);
+    });
+  }
+  if(R.type==='sort'){
+    frame(`<div class="m-marker"><span class="chip">${it.t}</span></div>
+      <div class="opts two"><button class="opt t-ps" data-a="ps">Past Simple<span class="mark"></span></button><button class="opt t-pp" data-a="pp">Present Perfect<span class="mark"></span></button></div>`);
+    app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(S.answered) return;
+      const ok = b.dataset.a===it.a;
+      app.querySelectorAll('.opt').forEach(x=>{ x.disabled=true;
+        if(x.dataset.a===it.a){ x.classList.add('right'); x.querySelector('.mark').textContent=' ✅'; }
+        else { x.classList.add(x===b?'wrong':'dim'); if(x===b) x.querySelector('.mark').textContent=' ❌'; } });
+      answer(ok, `<b>${it.t}</b>: ${it.why}`, `${it.t} → ${it.a==='ps'?'Past Simple':'Present Perfect'}`, null, it.t);
+    });
+  }
+  if(R.type==='input'){
+    frame(`<div class="m-type"><p class="sent">${it.pre} <input id="inp" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Впиши форму глагола"> <span class="hint">(${it.hint})</span> ${it.post}</p></div>
+      <button class="btn check" id="chk">Проверить</button>`);
+    const inp = document.getElementById('inp'), chk = document.getElementById('chk');
+    const go = ()=>{
+      if(S.answered) return;
+      if(!inp.value.trim()){ inp.focus(); return; }
+      const ok = it.acc.map(norm).includes(norm(inp.value));
+      inp.classList.add(ok?'ok':'bad'); inp.readOnly = true; chk.remove();
+      answer(ok, (ok?'':`Правильно: <b>${it.acc[0]}</b>. `)+it.why, it.full);
+    };
+    chk.onclick = go;
+    inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!S.answered) go(); else S.next&&S.next(); } });
+    inp.focus();
+  }
+  if(R.type==='police'){
+    frame(`<div class="m-police"><div class="ph">🚨 Грамматическая полиция</div><small>Подозреваемое предложение:</small><p class="sus">${it.s}</p></div>
+      <div class="opts two"><button class="opt" data-v="1">✅ Всё чисто<span class="mark"></span></button><button class="opt" data-v="0">🚨 Задержать<span class="mark"></span></button></div>`);
+    app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(S.answered) return;
+      const ok = Number(b.dataset.v)===it.ok;
+      app.querySelectorAll('.opt').forEach(x=>{ x.disabled=true;
+        if(Number(x.dataset.v)===it.ok) x.classList.add('right'); else x.classList.add(x===b?'wrong':'dim'); });
+      answer(ok, (it.ok?'':'Ошибка есть. ')+it.why, it.fix);
+    });
+  }
+}
+
+function norm(s){
+  s = s.toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.!?,]+$/,'').replace(/\s+/g,' ').trim();
+  s = s.replace(/^(i|you|we|they|he|she|it)(?=['\s])/,'').trim();
+  s = s.replace(/\bhaven't\b/g,'have not').replace(/\bhasn't\b/g,'has not').replace(/\bdidn't\b/g,'did not');
+  s = s.replace(/^'ve\b/,'have').replace(/^'s\b/,'has');
+  return s.replace(/\s+/g,' ').trim();
+}
+
+function answer(ok, why, full, sayText, spoken){
+  S.answered = true; S.done++;
+  if(ok){ S.score++; S.rs[S.r]++; }
+  else S.miss.push([full || sayText, spoken]);
+  updateTop();
+  const last = S.i === ROUNDS[S.r].items.length-1;
+  const fb = document.getElementById('fb');
+  fb.innerHTML = `<div class="fb ${ok?'good':'bad'}"><div class="react">${ok?pick(GOOD):pick(BAD)}</div><p class="why">${why}</p>${full?sayHTML(full, spoken):(sayText?sayHTML(sayText):'')}</div>
+    <button class="btn" id="next">${last ? (S.r===ROUNDS.length-1?'Смотреть результат':'Следующий раунд') : 'Дальше'}</button>`;
+  S.next = ()=>{
+    S.next = null;
+    if(!last){ S.i++; renderItem(); }
+    else if(S.r < ROUNDS.length-1){ S.r++; S.i=0; renderIntro(); }
+    else { S.r = ROUNDS.length; renderResult(); }
+  };
+  const nb = document.getElementById('next'); nb.onclick = ()=>S.next&&S.next();
+  if(ROUNDS[S.r].type!=='input') nb.focus({preventScroll:true});
+  fb.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'nearest'});
+}
+
+function renderResult(){
+  updateTop();
+  const p = S.score/TOTAL;
+  const verdict = p>=0.9 ? ['🏆 Achievement unlocked: Grammar Legend','Past Simple и Present Perfect тебя уважают.']
+    : p>=0.7 ? ['😎 Почти база','Ещё один заход — и будет легенда.']
+    : p>=0.5 ? ['🤔 Present Perfect смотрит с подозрением','Перечитай шпаргалку и пройди ещё раз.']
+    : ['💀 Грамматика вышла из чата','Не страшно: открой шпаргалку и попробуй снова.'];
+  app.innerHTML = `
+  <section class="card">
+    <h2>${verdict[0]}</h2>
+    <p class="lead">${verdict[1]}</p>
+    <p class="score">${S.score} <small>из ${TOTAL}</small></p>
+    <ul class="rounds">${ROUNDS.map((r,k)=>`<li><span>${r.title.replace(/^Раунд \d\. /,'')}</span><b>${S.rs[k]} / ${r.items.length}</b></li>`).join('')}</ul>
+    ${S.miss.length?`<div class="review"><h3>Работа над ошибками</h3>${S.miss.map(m=>sayHTML(m[0],m[1])).join('')}</div>`:''}
+    <button class="btn" id="again">Пройти ещё раз</button>
+  </section>`;
+  const b = document.getElementById('again'); b.onclick = ()=>{ reset(); renderStart(); }; b.focus({preventScroll:true});
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && S.answered && S.next && document.activeElement && document.activeElement.id!=='next' && document.activeElement.tagName!=='INPUT'){ e.preventDefault(); S.next(); }
+});
+
+renderStart();
+</script>
+</body>
+</html>
